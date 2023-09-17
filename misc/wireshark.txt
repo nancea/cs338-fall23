@@ -1,0 +1,61 @@
+Armira Nance
+
+
+===== DAYTIME =====
+
+
+1.
+Part 1, Entry 1: A client requests a meet-cute with the server
+Part 2, Entry 2: The server approves of the meet-cute, then sends relevant information to make it happen
+Part 3, Entry 3: The client responds back with more relevant information, which formally establishes a connection.
+
+No.	Time	Source	Destination	Protocol	Length	Info
+1	0.000000000	192.168.64.4	129.6.15.28	TCP	74	38086 → 13 [SYN] Seq=0 Win=64240 Len=0 MSS=1460 SACK_PERM TSval=3885056033 TSecr=0 WS=128
+2	0.046859828	129.6.15.28	192.168.64.4	TCP	66	13 → 38086 [SYN, ACK] Seq=0 Ack=1 Win=65535 Len=0 MSS=1382 WS=64 SACK_PERM
+3	0.047014016	192.168.64.4	129.6.15.28	TCP	54	38086 → 13 [ACK] Seq=1 Ack=1 Win=64256 Len=0
+
+
+
+2. Port 38086
+
+
+3. The client needs a port in order to know exactly where within a machine to send information.
+
+4.
+No.	Time	Source	Destination	Protocol	Length	Info
+3	0.047014016	192.168.64.4	129.6.15.28	TCP	54	38086 → 13 [ACK] Seq=1 Ack=1 Win=64256 Len=0
+
+5. The full content of a frame, not counting the Ethernet, IP, and TCP Headers, contains the time it took for the packet to be sent,
+the length of the package contents, and information about sending/receiving ports and what part(s) of our TCP handshake was/were involved.
+
+6. SYN is shorthand for synchronize.
+
+7. ACK is shorthand for acknowledge.
+
+8. FIN is shorthand for finish.
+
+9. The daytime server initiated the closing of the TCP connection. We know this in part due to the port named in the initial [FIN, ACK] entry (13).
+
+
+
+===== HTTP =====
+
+
+1. There were two TCP connections opened, which is apparent because only twice did the client send a request for synchronization.
+
+2. Yes, we are able to see where the index.html file was requested by way of an HTTP protocol. The entry appears as follows:
+
+No.	Time	Source	Destination	Protocol	Length	Info
+5	0.055036635	192.168.64.4	45.79.89.123	HTTP	408	GET /index.html HTTP/1.1
+
+3. Yes, we are able to see where the jeff_square_head.jpg file was requested, also by way of an HTTP protocol. The entry appears as follows:
+
+No.	Time	Source	Destination	Protocol	Length	Info
+11	0.228449398	192.168.64.4	45.79.89.123	HTTP	377	GET /jeff_square_head.jpg HTTP/1.1
+
+
+
+===== QUESTIONS =====
+
+
+1. What's the PSH shorthand for?
