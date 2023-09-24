@@ -1,0 +1,3 @@
+I'm creating this file with random text inside, because it's necessary for 
+an assignment. Realisticall,y the content is inconsequential, but if 
+you're going to encrypt some text, you need text to encrypt.
