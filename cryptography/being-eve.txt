@@ -1,0 +1,34 @@
+being-eve.txt
+Armira Nance, CS338: Computer Security
+
+The shared secret agreed upon by Alice and Bob is 7. In order to find
+this value, I used the given g = 7 and p = 61 to compute A = (g^X)%p
+and B = (g^Y)%p for Alice and Bob, respectively. From there, I
+computed Alice's shared secret (Ass) and Bob's shared secret (Bss)
+using the formulas Ass = (A^X)%p and Bss = (B^Y)%p, which both returned
+the integer value 7.
+
+I imagine this might have failed if our g and p values were much larger.
+
+
+I was unable to figure out the encrypted message from Alice to Bob,
+as I didn't know how to separate each message block into the proper
+ASCII bytes and there didn't seem to be much that signaled how we
+should go about that anywhere in the materials.
+
+The message from Alice to Bob is encoded starting with prime
+factorization. Two large prime numbers are multiplied to create
+another value, which ends up being our n. From there, Alice computes the
+lambda of her n value, which is the least common multiple of each prime
+number minus 1. From there, Alice finds her e value, which is an integer
+between 1 and her lambda of n. Once she finds that value, she moves on
+to encrypting each character of her message by converting it to ASCII
+values and raising each value to the power of her e value modulo her n
+value. At that point, she sends the new, encrypted message to Bob, which
+he uses his private key to decrypt (since the private/secret key and the
+public/shared key undo each other).
+
+If the numbers were much larger, it'd be even more difficult to determine
+how to break the encrypted message up into the correct bytes, which
+could cause the message to be lost in translation. This is also why
+Alice's encoding would be insecure if the numbers were much larger.
