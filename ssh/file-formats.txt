@@ -1,0 +1,85 @@
+# Armira Nance (file-formats.txt)
+
+############################# PRIVATE KEY ##########################
+
+In the private key file, I expect to find line termination
+characters, begin and end markers, and a subject header,
+among other items listed in the RFC 4716 document.
+
+To decode the private file, I loaded the Lapo Luchini website
+and pasted the body of the key file into the text box. Then
+I pressed the decode button. There wasn't much else to do on
+the website.
+
+My decoded RSA private key looked like this:
+
+OSS Nokalva TLV Print Utility  Version 8.6.1
+Copyright (C) 1997-2023 OSS Nokalva, Inc.  All rights reserved.
+
+
+30 8206E3(1763)
+  02 01 00
+  02 820181(385) 00BA1D73DA2224F6DAAF6405F996E9CD3685B30BB48D3C5320150F7F068B...
+  02 03 010001
+  02 820180(384) 397F95E6233C564353824C5242AC72A8D07F7333519AFC7761EA4AAD2412...
+  02 81C1(193) 00DB531534DB1966D673B95DADC2919CA5B122642FD33EB705C187D771188C...
+  02 81C1(193) 00D93CBA0F2AE80C7465F20409255DD1BB61DCBE8D1EF6730BEB31C9D4B43F...
+  02 81C0(192) 03DAF2047BD576794E8F73961A5574EB74B1A6113125691230D4B274CA79AF...
+  02 81C1(193) 00C560F1C4BA3D60A399C50D79A9E3D69E24CAC6AFBE443A3FC810D2CB5A82...
+  02 81C0(192) 03F0751AD8708D031800B2E258A2EBB820C587E752F2F8998D99C5084F67D5...
+
+
+I'm not sure what the first line (30 8206E3(1763)) represents, but
+the second line is the version number (0), which tells us this is a
+two-prime RSA key. The next line is the modulus of the RSA key,
+which is a long integer. After that is the public exponent (65537),
+which is followed by the private exponent, prime1, prime2, exponent1,
+exponent2, and coefficient, which are all long integer values. These
+values are used in conjunction to decrypt the key file. Those
+integers are represented as hex values preceded by an offset (02)
+a short series of characters that I haven't quite identified
+(e.g. 81C1(193)).
+
+
+############################# PUBLIC KEY ##########################
+
+I expected the public key to be significantly more sparse than the
+private key, because none of the values used to decrypt are to be
+included in the file. According to RFC 8017, I should expect to
+find the modulus and the public exponent (65537). I decoded the
+public key using openssl. The command looked like this:
+
+openssl rsa -pubin -inform PEM -text -noout -in id_rsa_homework.pem
+
+The modulus appeared as such:
+
+Modulus:
+    00:ba:1d:73:da:22:24:f6:da:af:64:05:f9:96:e9:
+    cd:36:85:b3:0b:b4:8d:3c:53:20:15:0f:7f:06:8b:
+    dd:15:0c:7c:8a:59:2e:54:0f:dc:fe:35:36:cd:09:
+    69:05:24:51:16:87:e9:38:d2:30:f4:91:a5:2c:de:
+    16:79:d2:20:65:e1:4c:89:79:25:2b:e3:e2:37:af:
+    44:96:45:64:40:ca:69:74:74:ad:42:d0:a8:b6:1e:
+    f7:8d:ce:7e:7e:02:c1:b1:a7:ee:c3:f4:82:a1:da:
+    26:4f:39:73:ea:0f:2f:a9:2e:f3:a2:da:7c:a5:8a:
+    c4:24:c8:72:6c:96:62:1d:3e:d5:22:ca:7d:72:66:
+    10:59:96:4d:83:fb:7e:fb:a1:7e:ee:6d:5c:f9:a8:
+    83:11:da:06:ee:da:df:26:59:72:f1:21:16:7f:82:
+    8c:4c:98:47:8a:08:87:56:26:37:39:6d:cc:bb:ce:
+    61:8e:0d:9d:7f:99:f1:06:d7:96:f1:12:a6:3d:3d:
+    6f:40:d3:0a:38:ff:4d:e0:d4:e2:ea:93:c4:82:2a:
+    3c:b8:2d:87:fd:85:14:da:47:94:86:78:ba:af:7b:
+    7a:b7:9f:a5:1b:77:bf:f8:d6:21:5a:79:29:dd:ca:
+    ab:31:4f:4e:39:e4:90:f3:9b:b0:00:8d:7e:e8:05:
+    ac:79:15:23:9f:f5:6c:bd:ae:d1:8e:fc:cc:40:95:
+    65:1c:f8:92:a8:b6:d4:37:53:4b:d1:c3:ec:38:13:
+    f1:3d:a8:44:7a:39:8a:69:43:6f:8f:82:05:53:bb:
+    80:2b:02:53:78:6d:f1:36:c1:64:a9:d3:7a:bc:7c:
+    f9:4d:2c:6e:13:34:18:5b:92:d5:27:25:6d:8d:f3:
+    0a:55:08:db:a1:bc:6c:0b:bf:d2:be:d0:83:8e:ca:
+    87:7d:18:59:a4:e2:39:dd:27:ba:ab:91:3d:a0:bb:
+    1b:07:ee:05:59:74:35:80:7e:34:e4:42:ca:67:6f:
+    fe:db:d9:96:5e:34:0b:13:fb:8d
+
+This value, alongside the public exponent are used to encrypt
+data that will later be decrypted by the private key.
