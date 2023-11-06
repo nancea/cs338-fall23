@@ -1,0 +1,49 @@
+Armira Nance, summary.txt
+
+
+Part 1
+Total time: 96.54s user
+Number of hashes computed: 267516
+Passwords cracked: 2734
+Time per hash computed: 0.0003s
+Time per password cracked: 0.035s
+Passwords cracked per number of hashes computed: 0.01 ? (I divided passwords cracked by hashes computed)
+
+
+
+Analysis:
+- Did your time per hash computed change between phases? By what factor? Why?
+
+I only completed the first phase, because the second phase took a long time to work
+and I kept running out of memory mid-process.
+
+- Did your time per password crack change between phases? By what factor? Why?
+
+I wouldn't know because I wasn't successful with parts 2 and 3, but I got far enough
+to say for certain that the time per cracked password increased significantly between
+the first and second parts. The reason is that there was more to parse through in the
+second round given that so many combinations of words had to be computed then compared.
+
+
+- Suppose you wanted to precompute all the hashes for each possible password
+so you could just look up the password in a table indexed by the hash. How much
+memory would be required for each phase?
+
+On my machine with only Google Chrome, Terminal, and my text editor running, it took all
+of my memory to get 10 minutes into the work before my machine ran out of memory. My
+machine has 16 GB of RAM, so this requires a decent bit of memory and I'm almost certain
+I would've taken up all of my computer's memory to precompute all the possible hashes,
+but that's assuming I don't have anything else running at the same time.
+
+- Give 3-4 reasons we should store password hashes and not the passwords themselves.
+Think in terms of threats, who the attackers might be, etc.
+
+1. If an attacker gains access to the passwords, they won't be able to use any compromised
+information immediately since it's not in plain text.
+
+2. Since some users might reuse passwords on various websites, storing the password hash
+prevents an attacker from compromising every website on which a user might have reused that
+specific password.
+
+3. Storing the hash of a password provides access to more password security since we can
+salt hashes and use different formulas to further encrypt passwords.
